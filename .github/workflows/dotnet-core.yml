@@ -13,8 +13,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Prova Setup
-      uses: actions/setup-dotnet@v2
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:        
@@ -25,4 +23,4 @@ jobs:
     - name: Build
       run: dotnet build ml/ml.sln --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test ml/tester/tester.csproj --no-restore --verbosity normal
