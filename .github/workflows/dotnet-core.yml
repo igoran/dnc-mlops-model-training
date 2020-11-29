@@ -23,4 +23,4 @@ jobs:
     - name: Build
       run: dotnet build ml/ml.sln --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test ml/tester/tester.csproj --no-restore --verbosity normal
