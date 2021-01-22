@@ -24,9 +24,13 @@ jobs:
       run: dotnet build ml/ml.sln --configuration Release --no-restore
     - name: Test
       run: dotnet test ml/tester/tester.csproj --no-restore --verbosity normal
-    - name: GitVersion
-      id: gitversion  # step id used as reference for output values
-      uses: roryprimrose/rungitversion@v1.0.0
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.7
+      with:
+        versionSpec: '5.5.0'
+    - name: Determine Version
+      id:   gitversion
+      uses: gittools/actions/gitversion/execute@v0.9.7
     - name: 'Run Training Tool'
-      run: dotnet run ml/trainer/trainer.csproj --configuration Release -- ${{ steps.gitversion.outputs.NuGetVersionV2 }}-${{ steps.gitversion.outputs.ShortSha }}.zip'
+      run: dotnet run ml/trainer/trainer.csproj --configuration Release -- ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}.zip'
       working-directory: ml/data/
