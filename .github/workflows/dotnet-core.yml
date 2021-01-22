@@ -35,5 +35,5 @@ jobs:
       id:   gitversion
       uses: gittools/actions/gitversion/execute@v0.9.7
     - name: 'Run Training Tool'
-      run: dotnet run --project ml/trainer/trainer.csproj --configuration Release -- ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}.zip'
+      run: dotnet run --project ml/trainer/trainer.csproj --configuration Release # -- ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}.zip'
       working-directory: ml/data/
