@@ -24,6 +24,9 @@ jobs:
       run: dotnet build ml/ml.sln --configuration Release --no-restore
     - name: Test
       run: dotnet test ml/tester/tester.csproj --no-restore --verbosity normal
+    - name: GitVersion
+      id: gitversion  # step id used as reference for output values
+      uses: roryprimrose/rungitversion@v1.0.0
     - name: 'Run Training Tool'
-      run: dotnet run ml/trainer/trainer.csproj --configuration Release
-      working-directory: ml/trainer/
+      run: dotnet run ml/trainer/trainer.csproj --configuration Release -- ${{ steps.gitversion.outputs.NuGetVersionV2 }}-${{ steps.gitversion.outputs.ShortSha }}.zip'
+      working-directory: ml/data/
