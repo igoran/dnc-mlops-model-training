@@ -38,7 +38,7 @@ jobs:
       run: dotnet run --project ../trainer/trainer.csproj --configuration Release # -- ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}.zip'
       working-directory: ml/data/
   staging:
-    name: Release Trained model on GH
+      name: Release Trained model on GH
       environment: 
         name: staging
         url: ${{ steps.create_release.outputs.html_url }} #html_url
