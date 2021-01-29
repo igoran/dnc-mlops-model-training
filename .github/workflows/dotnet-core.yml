@@ -37,6 +37,8 @@ jobs:
     - name: 'Run Training Tool'
       run: dotnet run --project ../trainer/trainer.csproj --configuration Release # -- ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}.zip'
       working-directory: ml/data/
+      env:
+        VERSION_NAME: ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}      
     - name: Upload model data
       uses: actions/upload-artifact@v1
       with:
@@ -61,8 +63,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        tag_name: ${{ env.VERSION_NAME }}
+        release_name: Release  ${{ env.VERSION_NAME }}
         body_path: ./CHANGELOG.txt
         draft: false
         prerelease: false
@@ -80,7 +82,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps           
         asset_path: ./model.zip
-        asset_name: ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}.zip
+        asset_name: ${{ env.VERSION_NAME }}.zip
         asset_content_type: application/zip
     # - uses: pulumi/actions@v1
     #   name: Storage Account Creation
@@ -91,5 +93,4 @@ jobs:
     #     ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
     #     ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
     #     ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-    #     PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}      
-
+    #     PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
