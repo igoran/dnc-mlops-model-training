@@ -37,7 +37,18 @@ jobs:
     - name: 'Run Training Tool'
       run: dotnet run --project ../trainer/trainer.csproj --configuration Release # -- ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}.zip'
       working-directory: ml/data/
-  staging:      
+    - name: Upload model data
+      uses: actions/upload-artifact@v1
+      with:
+        name: artifact-model
+        path: ./ml/data/model.zip
+    - name: Upload ChangeLogs
+      uses: actions/upload-artifact@v1
+      with:
+        name: artifact-changelog
+        path: ./ml/data/CHANGELOG.txt
+  staging:
+    needs: build
     name: Release Trained model on GH
     environment: 
       name: staging
@@ -52,9 +63,15 @@ jobs:
       with:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
-        body_path: ./ml/data/CHANGELOG.txt
+        body_path: ./CHANGELOG.txt
         draft: false
         prerelease: false
+    - uses: actions/download-artifact@v2
+      with:
+        name: artifact-model
+    - uses: actions/download-artifact@v2
+      with:
+        name: artifact-changelog
     - name: Upload Release Asset
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1
@@ -62,6 +79,17 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps           
-        asset_path: ./ml/data/model.zip
+        asset_path: ./model.zip
         asset_name: ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}.zip
         asset_content_type: application/zip
+    # - uses: pulumi/actions@v1
+    #   name: Storage Account Creation
+    #   id: azure_storage_account
+    #   with:
+    #     command: up
+    #   env:
+    #     ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+    #     ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+    #     ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+    #     PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}      
+
