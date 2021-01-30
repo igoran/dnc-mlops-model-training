@@ -34,7 +34,7 @@ jobs:
     - name: Determine Version
       id:   gitversion
       uses: gittools/actions/gitversion/execute@v0.9.7
-    - name: 'Run Training Tool'
+    - name: 'Run Training Tool -- [CHECK HERE Training-related statistics]'
       run: dotnet run --project ../trainer/trainer.csproj --configuration Release # -- ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}.zip'
       working-directory: ml/data/
       env:
@@ -96,13 +96,3 @@ jobs:
         asset_path: ./model.zip
         asset_name: ${{ env.VERSION_NAME }}.zip
         asset_content_type: application/zip
-    # - uses: pulumi/actions@v1
-    #   name: Storage Account Creation
-    #   id: azure_storage_account
-    #   with:
-    #     command: up
-    #   env:
-    #     ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-    #     ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-    #     ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-    #     PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
