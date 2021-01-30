@@ -66,9 +66,8 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: artifact-versiondata
-    - run: |
-        export version=$(cat ./current-version.txt)
-        echo "VERSION_NAME=${{ env.version }}" >> $GITHUB_ENV
+    - run: |        
+        echo "VERSION_NAME=`cat ./current-version.txt`" >> $GITHUB_ENV
     - run: echo "Creating version ${{ env.VERSION_NAME }}"
     - uses: actions/download-artifact@v2
       with:
