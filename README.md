@@ -1,2 +1,2 @@
-# dnc-mlops-model-training
-DotnetConference 2020 - Model Training Repository
+# Rome .NET Conference 2020
+ML Training Project.
