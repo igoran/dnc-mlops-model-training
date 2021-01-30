@@ -34,7 +34,7 @@ jobs:
     - name: Determine Version
       id:   gitversion
       uses: gittools/actions/gitversion/execute@v0.9.7
-    - name: 'Run Training Tool'
+    - name: 'Run Training Tool -- [CHECK HERE Training-related statistics]'
       run: dotnet run --project ../trainer/trainer.csproj --configuration Release # -- ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}.zip'
       working-directory: ml/data/
       env:
