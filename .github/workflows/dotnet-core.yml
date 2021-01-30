@@ -39,6 +39,7 @@ jobs:
       working-directory: ml/data/
       env:
         VERSION_NAME: ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}
+    - run: echo "${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}" > ./ml/data/current-version.txt
     - name: Upload model data
       uses: actions/upload-artifact@v1
       with:
@@ -48,8 +49,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: artifact-changelog
-        path: ./ml/data/CHANGELOG.txt
-    - run: echo ${{ env.VERSION_NAME }} > ./ml/data/current-version.txt
+        path: ./ml/data/CHANGELOG.txt    
     - name: Upload Version data
       uses: actions/upload-artifact@v1
       with:
