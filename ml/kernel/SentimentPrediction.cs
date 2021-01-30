@@ -13,7 +13,7 @@ namespace kernel
 
         public override string ToString()
         {
-            return $"\"{SentimentText}\" Positive: '{Prediction}' Score: {Score}";
+            return $"\"{SentimentText}\" is '{(Prediction ? "Positive":"Negative")}' Score: {Score} Probability: {Probability}";
         }
     }
 }

@@ -8,4 +8,9 @@
     <PackageReference Include="Microsoft.ML" Version="1.5.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="training-data.tsv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

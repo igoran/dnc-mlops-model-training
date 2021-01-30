@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tester", "tester\tester.csproj", "{17E29FFC-4AAD-4F07-AA2B-084DB66EFB81}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dataset", "Dataset", "{1E347747-3DEC-4AF6-B0EB-ACD9C003E5CA}"
+	ProjectSection(SolutionItems) = preProject
+		data\yelp_labelled.txt = data\yelp_labelled.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
