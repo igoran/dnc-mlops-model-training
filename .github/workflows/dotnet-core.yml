@@ -99,4 +99,4 @@ jobs:
     - uses: muinmomin/webhook-action@v1.0.0
       with:
         url: https://api.github.com/repos/igoran/dnc-mlops-model-serving/actions/workflows/dotnet-serving/dispatches
-        data: "{ref: 'main'}"
+        data: "{ \"ref\": \"main\"}"
