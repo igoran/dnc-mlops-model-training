@@ -9,7 +9,7 @@ namespace kernel
     {
         private readonly MLContext context;
         private readonly IDataView dataView;
-        public const float Threshold = 0.75f;
+        public const float Threshold = 0.70f;
 
         public TrainerForBinaryClassification(string datasetPath)
         {
