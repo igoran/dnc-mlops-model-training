@@ -86,5 +86,4 @@ namespace trainer
             Console.WriteLine($"{nameof(buildConfig.OutputDirectory)} : {buildConfig.OutputDirectory}");
         }
     }
-
 }
