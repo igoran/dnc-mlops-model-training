@@ -7,10 +7,10 @@ namespace tester
         public static IEnumerable<object[]> Inputs =>
             new List<object[]>
             {
-                new object[] {"I loving DevOps Heroes 2019!", true},
-                new object[] {"I highly recommend this session", true},
-                new object[]{"Not enjoyed, I don't recommend this speech",false},
-                new object[] {"This session and that speakers are fantastic", true},
+                new object[] { "A great touch!", true},
+                new object[] {"I highly recommend this place", true},
+                new object[]{"Not enjoyed, I don't recommend this place",false},
+                new object[] { "Would not go back",false},
             };
     }
 }
