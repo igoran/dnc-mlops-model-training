@@ -98,5 +98,5 @@ jobs:
         asset_content_type: application/zip
     - uses: muinmomin/webhook-action@v1.0.0
       with:
-        url: ${{ GITHUB_API_URL }}/repos/igoran/dnc-mlops-model-serving/actions/workflows/dotnet-serving/dispatches
+        url: ${{ env.GITHUB_API_URL }}/repos/igoran/dnc-mlops-model-serving/actions/workflows/dotnet-serving/dispatches
         data: "{'ref': 'main'}"
