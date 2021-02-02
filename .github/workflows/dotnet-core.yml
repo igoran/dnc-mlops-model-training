@@ -99,7 +99,7 @@ jobs:
     - name: Dispatch event Model Created
       uses: mvasigh/dispatch-action@main
       with:
-        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        token: ${{ secrets.MY_GITHUB_TOKEN }}
         repo: dnc-mlops-model-serving
         owner: igoran
         event_type: model-created
