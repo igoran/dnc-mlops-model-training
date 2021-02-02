@@ -73,18 +73,11 @@ jobs:
       with:
         name: artifact-changelog
     - name: Verify existing release
-      id: webhooks
-      uses: satak/webrequest-action@master
-      with:
-        url: https://github.com/igoran/dnc-mlops-model-training/releases/download/${{ env.VERSION_NAME }}/${{ env.VERSION_NAME }}.zip
-        method: GET
-    - name: Retrieve Last status code
       run: |
-        $output = '${{ steps.webhook.outputs.output }}' | ConvertFrom-Json
-        Write-Host "Time from output $($output.time) statusCode $($output.statusCode) data $($output.data)"
-        [System.Environment]::SetEnvironmentVariable("RELEASE_STATUS_CODE",$output.statusCode)
+        statuscode=$(curl -s -o /dev/null -w "%{http_code}" "https://github.com/igoran/dnc-mlops-model-training/releases/download/${{ env.VERSION_NAME }}/${{ env.VERSION_NAME }}.zip")        
+        echo "RELEASE_STATUS_CODE=$statuscode" >> $GITHUB_ENV
     - name: Create Release
-      if: ${{ env.RELEASE_STATUS_CODE }} == "404"
+      if: ${{ env.RELEASE_STATUS_CODE == '404' }}
       id: create_release
       uses: actions/create-release@v1
       env:
