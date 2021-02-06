@@ -93,6 +93,7 @@ jobs:
         name: artifact-model
     - name: Upload Release Asset
       id: upload-release-asset
+      if: ${{ env.RELEASE_STATUS_CODE == '404' }}
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
