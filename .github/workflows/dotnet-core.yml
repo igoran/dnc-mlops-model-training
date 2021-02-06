@@ -39,8 +39,8 @@ jobs:
       run: |
         echo ${PWD}
         echo ${RELEASE_DIR}
-        dotnet run --project trainer.csproj --configuration Release
-      working-directory: ./ml/trainer
+        dotnet run --project  ../trainer/trainer.csproj --configuration Release
+      working-directory: ${{ env.RELEASE_DIR }}
       env:
         VERSION_NAME: ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}
     - run: echo "${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}" > ./ml/output/current-version.txt
