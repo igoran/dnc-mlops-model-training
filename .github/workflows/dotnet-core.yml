@@ -49,7 +49,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: artifact-changelog
-        path: ./ml/data/CHANGELOG.txt    
+        path: ./ml/data/ReleaseInfo.md    
     - name: Upload Version data
       uses: actions/upload-artifact@v1
       with:
@@ -93,6 +93,7 @@ jobs:
         name: artifact-model
     - name: Upload Release Asset
       id: upload-release-asset
+      if: ${{ env.RELEASE_STATUS_CODE == '404' }}
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
