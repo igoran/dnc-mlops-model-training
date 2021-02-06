@@ -28,6 +28,8 @@ namespace trainer
 
             var modelOutputPath = buildConfig.GetModelFile().FullName;
 
+            GetModelStats(metrics);
+
             if (!trainer.SaveModel(modelOutputPath))
             {
                 throw new ApplicationException($"ML Model cannot be saved to this position: {modelOutputPath}");
