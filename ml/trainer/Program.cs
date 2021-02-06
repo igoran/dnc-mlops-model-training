@@ -16,8 +16,6 @@ namespace trainer
 
             var dataFilePath = GetDataFilePath(buildConfig);
 
-            Console.WriteLine(dataFilePath);
-
             var trainer = new TrainerForBinaryClassification(dataFilePath);
 
             var metrics = trainer.Evaluate();
@@ -28,8 +26,6 @@ namespace trainer
                 throw new ApplicationException("F1Score is too low!");
             }
 
-            var stats = GetModelStats(metrics);
-
             var modelOutputPath = buildConfig.GetModelFile().FullName;
 
             if (!trainer.SaveModel(modelOutputPath))
@@ -39,7 +35,9 @@ namespace trainer
 
             Console.WriteLine($"Model written to disk, location: {modelOutputPath}");
 
-            var changeLogPath = buildConfig.GetChangeLog().FullName;
+            var stats = GetModelStatsMarkdown(metrics);
+
+            var changeLogPath = buildConfig.GetReleaseInfoMarkdown().FullName;
 
             File.WriteAllText(changeLogPath, stats);
 
@@ -62,6 +60,31 @@ namespace trainer
             sb.AppendLine("--------------------------------");
 
             Console.WriteLine(sb);
+
+            return sb.ToString();
+        }
+
+        private static string GetModelStatsMarkdown(BinaryClassificationMetrics metrics)
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine("# Model Quality Metrics:");
+
+            sb.AppendLine("| Parameter | Value |");
+            sb.AppendLine("| :---      |    :----: |");
+            sb.AppendLine($"| Accuracy | **{metrics.Accuracy:P2}**|");
+            sb.AppendLine($"| AUC | **{metrics.AreaUnderRocCurve:P2}**|");
+            sb.AppendLine($"| AUCPR | **{metrics.AreaUnderPrecisionRecallCurve:P2}**|");
+            sb.AppendLine($"| F1Score | **{metrics.F1Score:P2}**|");
+
+
+            sb.AppendLine($"---");
+
+            sb.AppendLine($"## Confusion Matrix:");
+
+            sb.AppendLine($"```");
+            sb.AppendLine(metrics.ConfusionMatrix.GetFormattedConfusionTable());
+            sb.AppendLine($"```");
 
             return sb.ToString();
         }

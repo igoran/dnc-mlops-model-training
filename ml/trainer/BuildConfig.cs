@@ -25,6 +25,13 @@ namespace trainer
             return new FileInfo(Path.Combine(dir, "CHANGELOG.txt"));
         }
 
+        public FileInfo GetReleaseInfoMarkdown()
+        {
+            var dir = string.IsNullOrWhiteSpace(DataDirectory) ? Directory.GetCurrentDirectory() : OutputDirectory;
+
+            return new FileInfo(Path.Combine(dir, "ReleaseInfo.md"));
+        }
+
         private static readonly Lazy<IServiceProvider> _serviceProvider = new Lazy<IServiceProvider>(() =>
         {
             var config = new ConfigurationBuilder().AddEnvironmentVariables().Build();
