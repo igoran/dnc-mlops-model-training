@@ -43,7 +43,7 @@ jobs:
       working-directory: ${{ env.RELEASE_DIR }}
       env:
         VERSION_NAME: ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}
-    - run: echo "${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}" > ./ml/output/current-version.txt
+    - run: echo "${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}" >  ${{ env.RELEASE_DIR }}current-version.txt
     - name: Upload Artifacts
       uses: actions/upload-artifact@v1
       with:
