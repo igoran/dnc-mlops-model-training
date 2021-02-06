@@ -85,7 +85,7 @@ jobs:
       with:
         tag_name: ${{ env.VERSION_NAME }}
         release_name: Release  ${{ env.VERSION_NAME }}
-        body_path: ./CHANGELOG.txt
+        body_path: ./ReleaseInfo.md
         draft: false
         prerelease: false
     - uses: actions/download-artifact@v2
