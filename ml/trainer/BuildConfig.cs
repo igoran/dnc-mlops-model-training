@@ -13,21 +13,21 @@ namespace trainer
 
         public FileInfo GetModelFile()
         {
-            var dir = string.IsNullOrWhiteSpace(DataDirectory) ? Directory.GetCurrentDirectory() : OutputDirectory;
+            var dir = string.IsNullOrWhiteSpace(DataDirectory) ? Environment.CurrentDirectory : OutputDirectory;
 
             return new FileInfo(Path.Combine(dir, "model.zip"));
         }
 
         public FileInfo GetChangeLog()
         {
-            var dir = string.IsNullOrWhiteSpace(DataDirectory) ? Directory.GetCurrentDirectory() : OutputDirectory;
+            var dir = string.IsNullOrWhiteSpace(DataDirectory) ? Environment.CurrentDirectory : OutputDirectory;
 
             return new FileInfo(Path.Combine(dir, "CHANGELOG.txt"));
         }
 
         public FileInfo GetReleaseInfoMarkdown()
         {
-            var dir = string.IsNullOrWhiteSpace(DataDirectory) ? Directory.GetCurrentDirectory() : OutputDirectory;
+            var dir = string.IsNullOrWhiteSpace(DataDirectory) ? Environment.CurrentDirectory : OutputDirectory;
 
             return new FileInfo(Path.Combine(dir, "ReleaseInfo.md"));
         }
