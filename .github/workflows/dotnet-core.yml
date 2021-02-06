@@ -35,18 +35,14 @@ jobs:
     - name: Determine Version
       id:   gitversion
       uses: gittools/actions/gitversion/execute@v0.9.7
-    - name: List folders
-      run: ls -laR   
     - name: 'Run Training Tool -- [CHECK HERE Training-related statistics]'
       run: |
         echo ${PWD}
         echo ${RELEASE_DIR}
-        dotnet run --project ../../../trainer.csproj --configuration Release
-      working-directory: ${{ env.RELEASE_DIR }}
+        dotnet run --project trainer.csproj --configuration Release
+      working-directory: ./ml/trainer
       env:
         VERSION_NAME: ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}
-    - name: List folders
-      run: ls -laR
     - run: echo "${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}" > ./ml/output/current-version.txt
     - name: Upload Artifacts
       uses: actions/upload-artifact@v1
