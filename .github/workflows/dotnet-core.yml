@@ -1,6 +1,6 @@
 name: .NET Core
 env:
-  RELEASE_DIR: './ml/trainer/bin/Release/net5.0/'
+  RELEASE_DIR: './ml/data/'
 on:
   push:
     branches: [ main ]
