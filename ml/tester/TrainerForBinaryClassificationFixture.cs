@@ -67,6 +67,21 @@ namespace tester
         }
 
         [Fact]
+        public void should_print_metrics()
+        {
+            // Act
+            var metrics = Sut.Evaluate();
+
+            //  Arrange
+            var text = Sut.ToTextStats(metrics);
+
+            //  Assert
+            text?.Length.ShouldBeGreaterThan(0);
+
+            Console.WriteLine(Sut.ToTextStats(metrics));           
+        }
+
+        [Fact]
         public void should_metrics_be_in_range()
         {
             // Act

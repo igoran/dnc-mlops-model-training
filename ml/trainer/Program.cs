@@ -28,67 +28,23 @@ namespace trainer
 
             var modelOutputPath = buildConfig.GetModelFile().FullName;
 
-            GetModelStats(metrics);
-
             if (!trainer.SaveModel(modelOutputPath))
             {
                 throw new ApplicationException($"ML Model cannot be saved to this position: {modelOutputPath}");
             }
 
-            Console.WriteLine($"Model written to disk, location: {modelOutputPath}");
+            var printableMetrics = trainer.ToTextStats(metrics);
 
-            var stats = GetModelStatsMarkdown(metrics);
+            Console.WriteLine(printableMetrics);
+
+            Console.WriteLine($"Model written to disk, location: {modelOutputPath}");
 
             var changeLogPath = buildConfig.GetReleaseInfoMarkdown().FullName;
 
-            File.WriteAllText(changeLogPath, stats);
+            File.WriteAllText(changeLogPath, trainer.ToMarkDownStats(metrics));
 
-            Console.WriteLine($"ChangeLog written to disk, location: {changeLogPath}");
+            Console.WriteLine($"Markdown changeLog written to disk, location: {changeLogPath}");
 
-        }
-
-        private static string GetModelStats(BinaryClassificationMetrics metrics)
-        {
-            var sb = new StringBuilder();
-
-            sb.AppendLine("Model quality metrics:");
-            sb.AppendLine("--------------------------------");
-            sb.AppendLine($"Accuracy: {metrics.Accuracy:P2}");
-            sb.AppendLine($"AUC: {metrics.AreaUnderRocCurve:P2}");
-            sb.AppendLine($"AUCPR: {metrics.AreaUnderPrecisionRecallCurve:P2}");
-            sb.AppendLine($"F1Score: {metrics.F1Score:P2}");
-            sb.AppendLine($"Confusion Matrix:");
-            sb.AppendLine(metrics.ConfusionMatrix.GetFormattedConfusionTable());
-            sb.AppendLine("--------------------------------");
-
-            Console.WriteLine(sb);
-
-            return sb.ToString();
-        }
-
-        private static string GetModelStatsMarkdown(BinaryClassificationMetrics metrics)
-        {
-            var sb = new StringBuilder();
-
-            sb.AppendLine("# Model Quality Metrics:");
-
-            sb.AppendLine("| Parameter | Value |");
-            sb.AppendLine("| :---      |    :----: |");
-            sb.AppendLine($"| Accuracy | **{metrics.Accuracy:P2}**|");
-            sb.AppendLine($"| AUC | **{metrics.AreaUnderRocCurve:P2}**|");
-            sb.AppendLine($"| AUCPR | **{metrics.AreaUnderPrecisionRecallCurve:P2}**|");
-            sb.AppendLine($"| F1Score | **{metrics.F1Score:P2}**|");
-
-
-            sb.AppendLine($"---");
-
-            sb.AppendLine($"## Confusion Matrix:");
-
-            sb.AppendLine($"```");
-            sb.AppendLine(metrics.ConfusionMatrix.GetFormattedConfusionTable());
-            sb.AppendLine($"```");
-
-            return sb.ToString();
         }
 
         private static string GetDataFilePath(BuildConfig buildConfig)
