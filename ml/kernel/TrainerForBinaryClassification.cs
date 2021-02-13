@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using Microsoft.ML;
 using Microsoft.ML.Data;
 
@@ -70,5 +71,47 @@ namespace kernel
         public IDataView DataForTraining { get; private set; }
 
         public IDataView DataForTesting { get; private set; }
+
+        public string ToTextStats(BinaryClassificationMetrics metrics)
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine("Model quality metrics:");
+            sb.AppendLine("--------------------------------");
+            sb.AppendLine($"Accuracy: {metrics.Accuracy:P2}");
+            sb.AppendLine($"AUC: {metrics.AreaUnderRocCurve:P2}");
+            sb.AppendLine($"AUCPR: {metrics.AreaUnderPrecisionRecallCurve:P2}");
+            sb.AppendLine($"F1Score: {metrics.F1Score:P2}");
+            sb.AppendLine($"Confusion Matrix:");
+            sb.AppendLine(metrics.ConfusionMatrix.GetFormattedConfusionTable());
+            sb.AppendLine("--------------------------------");
+
+            return sb.ToString();
+        }
+
+        public string ToMarkDownStats(BinaryClassificationMetrics metrics)
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine("# Model Quality Metrics:");
+
+            sb.AppendLine("| Parameter | Value |");
+            sb.AppendLine("| :---      |    :----: |");
+            sb.AppendLine($"| Accuracy | **{metrics.Accuracy:P2}**|");
+            sb.AppendLine($"| AUC | **{metrics.AreaUnderRocCurve:P2}**|");
+            sb.AppendLine($"| AUCPR | **{metrics.AreaUnderPrecisionRecallCurve:P2}**|");
+            sb.AppendLine($"| F1Score | **{metrics.F1Score:P2}**|");
+
+
+            sb.AppendLine($"---");
+
+            sb.AppendLine($"## Confusion Matrix:");
+
+            sb.AppendLine($"```");
+            sb.AppendLine(metrics.ConfusionMatrix.GetFormattedConfusionTable());
+            sb.AppendLine($"```");
+
+            return sb.ToString();
+        }
     }
 }
