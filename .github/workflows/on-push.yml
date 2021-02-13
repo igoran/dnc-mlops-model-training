@@ -33,7 +33,7 @@ jobs:
     - name: Determine Version
       id:   gitversion
       uses: gittools/actions/gitversion/execute@v0.9.7
-    - name: 'Run Training Tool -- [CHECK HERE Training-related statistics]'
+    - name: 'Run Training Tool -- [SHOW HERE Model Quality Metrics]'
       run: |
         echo ${PWD}
         echo ${RELEASE_DIR}
