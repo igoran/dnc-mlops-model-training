@@ -33,7 +33,7 @@ jobs:
     - name: Determine Version
       id:   gitversion
       uses: gittools/actions/gitversion/execute@v0.9.7
-    - name: 'Run Training Tool -- [SHOW HERE Model Quality Metrics]'
+    - name: 'Run Training Tool -- [EXPAND THIS SECTION for Model Quality Metrics]'
       run: |
         echo ${PWD}
         echo ${RELEASE_DIR}
@@ -41,17 +41,18 @@ jobs:
       working-directory: ${{ env.RELEASE_DIR }}
       env:
         VERSION_NAME: ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}
-    - run: echo "${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}" >  ${{ env.RELEASE_DIR }}current-version.txt
+    - name: Saving the calculated version
+      run: echo "${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}" >  ${{ env.RELEASE_DIR }}current-version.txt
     - name: Upload Artifacts
       uses: actions/upload-artifact@v1
       with:
         name: artifact-folder
         path: ${{ env.RELEASE_DIR }}
-  staging:
+  serving:
     needs: build
     name: Release Trained model on GH
     environment: 
-      name: staging
+      name: serving
       url: ${{ steps.create_release.outputs.html_url }}
     runs-on: ubuntu-latest
     steps:
