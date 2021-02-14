@@ -1,3 +1,3 @@
 # MLOps with modern Tools
 
-## ML Training Project.
+## ML.NET Training Project.
