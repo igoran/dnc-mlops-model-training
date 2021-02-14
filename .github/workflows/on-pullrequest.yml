@@ -33,5 +33,3 @@ jobs:
         echo ${RELEASE_DIR}
         dotnet run --project  ../trainer/trainer.csproj --configuration Release
       working-directory: ${{ env.RELEASE_DIR }}
-      env:
-        VERSION_NAME: ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}
