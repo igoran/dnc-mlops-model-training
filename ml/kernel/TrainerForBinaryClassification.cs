@@ -38,8 +38,8 @@ namespace kernel
 
             // Step 3. Build your estimator
             var trainingPipeline = dataPipeline
-            .Append(context.BinaryClassification.Trainers.LbfgsLogisticRegression());
-            //.Append(context.BinaryClassification.Trainers.SdcaLogisticRegression());
+            //.Append(context.BinaryClassification.Trainers.LbfgsLogisticRegression());
+            .Append(context.BinaryClassification.Trainers.SdcaLogisticRegression());
 
             // Step 4. Train your Model
             return trainingPipeline.Fit(DataForTraining);
