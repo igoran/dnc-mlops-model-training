@@ -1,4 +1,6 @@
 name: .NET Core
+env:
+  RELEASE_DIR: './ml/data'
 
 on:
   pull_request:
@@ -25,3 +27,11 @@ jobs:
       run: dotnet build ml/ml.sln --configuration Release --no-restore
     - name: Test
       run: dotnet test ml/tester/tester.csproj --no-restore --verbosity normal
+    - name: 'Run Training Tool -- [EXPAND THIS SECTION for Model Quality Metrics]'
+      run: |
+        echo ${PWD}
+        echo ${RELEASE_DIR}
+        dotnet run --project  ../trainer/trainer.csproj --configuration Release
+      working-directory: ${{ env.RELEASE_DIR }}
+      env:
+        VERSION_NAME: ${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.shortSha }}
