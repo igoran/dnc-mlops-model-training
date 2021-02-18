@@ -38,8 +38,8 @@ namespace kernel
 
             // Step 3. Build your estimator
             var trainingPipeline = dataPipeline
-            //.Append(context.BinaryClassification.Trainers.LbfgsLogisticRegression());
-            .Append(context.BinaryClassification.Trainers.SdcaLogisticRegression());
+            .Append(context.BinaryClassification.Trainers.LbfgsLogisticRegression());
+            //.Append(context.BinaryClassification.Trainers.SdcaLogisticRegression());
 
             // Step 4. Train your Model
             return trainingPipeline.Fit(DataForTraining);
@@ -78,6 +78,8 @@ namespace kernel
 
             sb.AppendLine("Model quality metrics:");
             sb.AppendLine("--------------------------------");
+            sb.AppendLine("Learners: LbfgsLogisticRegression");
+            sb.AppendLine("--------------------------------");
             sb.AppendLine($"Accuracy: {metrics.Accuracy:P2}");
             sb.AppendLine($"AUC: {metrics.AreaUnderRocCurve:P2}");
             sb.AppendLine($"AUCPR: {metrics.AreaUnderPrecisionRecallCurve:P2}");
@@ -94,7 +96,7 @@ namespace kernel
             var sb = new StringBuilder();
 
             sb.AppendLine("# Model Quality Metrics:");
-
+            sb.AppendLine("##Learner: LbfgsLogisticRegression");
             sb.AppendLine("| Parameter | Value |");
             sb.AppendLine("| :---      |    :----: |");
             sb.AppendLine($"| Accuracy | **{metrics.Accuracy:P2}**|");
